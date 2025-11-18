@@ -11,6 +11,17 @@ import { checkSubscription } from '@/utils/permissions/checkSubscription'
 import { LabelSubscription } from '@/components/ui/label-subscription'
 
 import { Loader } from "lucide-react";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "ALNBarber - Painel de controle",
+  description: "Painel de controle - ALNBarber",
+  robots:{
+    index: true,
+    follow: true,
+    nocache: true
+  },
+};
 
 export default async function Dashboard() {
     const session = await getSession()

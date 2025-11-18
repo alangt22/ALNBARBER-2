@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
+  title: "ALNBarber - Encontre os melhores profissionais em um único local!",
   description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
   robots:{
     index: true,
@@ -25,17 +25,17 @@ export const metadata: Metadata = {
     nocache: true
   },
   openGraph:{
-    title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
+    title: "ALNBarber - Encontre os melhores profissionais em um único local!",
     description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
-    images: [`${process.env.NEXT_PUBLIC_URL}/logoAgendaPRO.png`],
+    images: [`${process.env.NEXT_PUBLIC_URL}/alnbarber.png` ],
     url: `${process.env.NEXT_PUBLIC_URL}`, 
     type: "website"
   },
   twitter: {
     card: "summary_large_image", 
-    title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
+    title: "ALNBarber - Encontre os melhores profissionais em um único local!",
     description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
-    images: [`${process.env.NEXT_PUBLIC_URL}/logoAgendaPRO.png` ]
+    images: [`${process.env.NEXT_PUBLIC_URL}/alnbarber.png` ]
   },
 };
 

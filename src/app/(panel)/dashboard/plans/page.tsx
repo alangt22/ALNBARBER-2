@@ -3,7 +3,18 @@ import { redirect } from "next/navigation"
 import { GridPlans } from "./_components/grid-plans"
 import { getSubscription } from '@/utils/get-subscription'
 import { SubscriptionDetail } from './_components/subscription-detail'
+import { Metadata } from 'next'
 
+
+export const metadata: Metadata = {
+  title: "ALNBarber - Planos",
+  description: "Planos - ALNBarber",
+  robots:{
+    index: true,
+    follow: true,
+    nocache: true
+  },
+};
 
 
 
