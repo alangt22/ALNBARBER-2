@@ -16,6 +16,24 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: "ALNBarber - Painel de controle",
   description: "Painel de controle - ALNBarber",
+    keywords: [
+    "barbearia",
+    "gestão de barbearia",
+    "agendamento online",
+    "SaaS barbearia",
+    "plataforma para barbeiros",
+    "sistema para barbearia",
+    "software barbearia",
+    "barbeiros",
+    "agenda barbearia",
+    "clientes barbearia"
+  ],
+  authors: [
+    { name: "ALNBarber" },
+  ],
+  creator: "ALNBarber",
+  publisher: "ALNBarber",
+  applicationName: "ALNBarber",
   robots:{
     index: true,
     follow: true,
@@ -36,7 +54,7 @@ export default async function Dashboard() {
         <main>
             <div className='space-x-2 flex items-center justify-end'>
                 <Link
-                    href={`/clinica/${session.user?.id}`}
+                    href={`/barbearia/${session.user?.id}`}
                     target='_blank'
                 >
                     <Button className='bg-blue-500 hover:bg-blue-900 cursor-pointer flex-1 md:flex-[0]'>

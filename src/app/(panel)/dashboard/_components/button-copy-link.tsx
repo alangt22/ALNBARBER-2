@@ -7,7 +7,7 @@ import { toast } from "sonner"
 export function ButtonCopyLink({userId}: {userId: string}){
 
     async function handleCopyLink(){
-        await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/clinica/${userId}`)
+        await navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_URL}/barbearia/${userId}`)
 
         toast.success("Link de agendamento copiado com sucesso!")
     } 
