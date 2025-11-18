@@ -10,7 +10,8 @@ interface UserProfileFormProps{
     phone: string | null;
     status: boolean;
     timeZone: string | null;
-    barbers: string[]
+    barbers: string[];
+    workingDays: string[];
 }
 
 const profileSchema = z.object({
@@ -19,12 +20,13 @@ const profileSchema = z.object({
     phone: z.string().optional(),
     status: z.string(),
     timeZone: z.string().min(1, {message: "O time zone é obrigatório"}),
-    barbers: z.array(z.string())
+    barbers: z.array(z.string()),
+    workingDays: z.array(z.string())
 })
 
 export type ProfileFormData = z.infer<typeof profileSchema>;
 
-export function useProfileForm({name, adress, phone, status, timeZone, barbers}:UserProfileFormProps) {
+export function useProfileForm({name, adress, phone, status, timeZone, barbers, workingDays}:UserProfileFormProps) {
     return useForm<ProfileFormData>({
         resolver: zodResolver(profileSchema),
         defaultValues:{
@@ -33,7 +35,8 @@ export function useProfileForm({name, adress, phone, status, timeZone, barbers}:
             phone: phone || '',
             status: status ? 'active': 'inactive',
             timeZone: timeZone || '',
-            barbers: barbers
+            barbers: barbers,
+            workingDays: workingDays
         }
     })
 }

@@ -12,7 +12,8 @@ const formSchema = z.object({
     status: z.boolean(),
     timeZone: z.string(),
     times: z.array(z.string()),
-    barbers: z.array(z.string())
+    barbers: z.array(z.string()),
+    workingDays: z.array(z.string())
 })
 
 type FormSchema = z.infer<typeof formSchema>
@@ -48,7 +49,8 @@ export async function updateProfile(formData: FormSchema) {
                 status: formData.status,
                 timeZone: formData.timeZone,
                 times: formData.times || [],
-                barbers: formData.barbers
+                barbers: formData.barbers,
+                workingDays: formData.workingDays
             }
         })
 
@@ -56,13 +58,13 @@ export async function updateProfile(formData: FormSchema) {
 
 
         return{
-            data: "Clinica atualizada com sucesso"
+            data: "Barbearia atualizada com sucesso"
         }
 
     } catch (error) {
         
         return{
-            error: "Falha ao atualizar clinica",
+            error: "Falha ao atualizar Barbearia",
         }
     }
 }

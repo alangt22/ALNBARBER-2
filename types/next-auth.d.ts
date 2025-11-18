@@ -20,4 +20,5 @@ interface User{
     createdAt: string;
     updatedAt: string;
     barbers: string[];
+    workingDays: string[];
 }

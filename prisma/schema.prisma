@@ -86,6 +86,7 @@ model User {
   times               String[] @default([])
 
   barbers     String[]
+  workingDays String[]            @default(["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"])
 
   subscription        Subscription?
   services            Services[]

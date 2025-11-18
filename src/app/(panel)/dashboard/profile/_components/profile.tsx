@@ -20,7 +20,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader } from "lucide-react";
 
@@ -32,6 +38,7 @@ import { formatPhone } from "@/utils/formatPhone";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AvatarProfile } from "./profile-avatar";
+import { DaysSelector } from "./day-selector";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
   include: {
@@ -45,13 +52,19 @@ interface ProfileContentProps {
 
 export function ProfileContent({ user }: ProfileContentProps) {
   const router = useRouter();
-  const [selectedHours, setSelectedHours] = useState<string[]>(user.times ?? []);
+  const [selectedHours, setSelectedHours] = useState<string[]>(
+    user.times ?? []
+  );
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
   const [barberName, setBarberName] = useState(""); // input temporário
   const [barbersList, setBarbersList] = useState<string[]>(user.barbers || []); // lista de barbers
+
+  const [selectedDays, setSelectedDays] = useState<string[]>([
+    ...user.workingDays,
+  ]);
 
   const { update } = useSession();
 
@@ -62,6 +75,7 @@ export function ProfileContent({ user }: ProfileContentProps) {
     status: user.status,
     timeZone: user.timeZone,
     barbers: user.barbers,
+    workingDays: user.workingDays,
   });
 
   // Funções para adicionar/remover barbers
@@ -109,6 +123,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
       zone.startsWith("America/Boa_Vista")
   );
 
+  const handleDaysChange = (days: string[]) => {
+    setSelectedDays(days);
+    form.setValue("workingDays", days);
+  };
+
   async function onSubmit(values: ProfileFormData) {
     setIsLoading(true);
 
@@ -120,6 +139,7 @@ export function ProfileContent({ user }: ProfileContentProps) {
       timeZone: values.timeZone,
       times: selectedHours || [],
       barbers: barbersList,
+      workingDays: selectedDays
     });
 
     if (response.error) {
@@ -162,7 +182,10 @@ export function ProfileContent({ user }: ProfileContentProps) {
                     <FormItem>
                       <FormLabel className="font-semibold">Nome</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Digite o nome da clínica..." />
+                        <Input
+                          {...field}
+                          placeholder="Digite o nome da clínica..."
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -175,9 +198,14 @@ export function ProfileContent({ user }: ProfileContentProps) {
                   name="adress"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-semibold">Endereço completo:</FormLabel>
+                      <FormLabel className="font-semibold">
+                        Endereço completo:
+                      </FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Digite o endereço da clínica..." />
+                        <Input
+                          {...field}
+                          placeholder="Digite o endereço da clínica..."
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -214,13 +242,20 @@ export function ProfileContent({ user }: ProfileContentProps) {
                     <FormItem>
                       <FormLabel className="font-semibold">Status</FormLabel>
                       <FormControl>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o status da clínica" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="active">ATIVO (aberto)</SelectItem>
-                            <SelectItem value="inactive">INATIVO (fechado)</SelectItem>
+                            <SelectItem value="active">
+                              ATIVO (aberto)
+                            </SelectItem>
+                            <SelectItem value="inactive">
+                              INATIVO (fechado)
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </FormControl>
@@ -248,7 +283,12 @@ export function ProfileContent({ user }: ProfileContentProps) {
                         className="px-2 py-1 rounded bg-[#000308] flex items-center space-x-1"
                       >
                         <span>{barber}</span>
-                        <Button type="button" variant="ghost" size="icon" onClick={() => removeBarber(barber)}>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeBarber(barber)}
+                        >
                           ✕
                         </Button>
                       </span>
@@ -261,7 +301,10 @@ export function ProfileContent({ user }: ProfileContentProps) {
                   <Label className="font-semibold">Configurar horários</Label>
                   <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
                     <DialogTrigger asChild>
-                      <Button value="outline" className="w-full justify-between">
+                      <Button
+                        value="outline"
+                        className="w-full justify-between"
+                      >
                         Clique aqui para selecionar horários
                         <ArrowRight className="w-5 h-5" />
                       </Button>
@@ -291,11 +334,27 @@ export function ProfileContent({ user }: ProfileContentProps) {
                           ))}
                         </div>
                       </section>
-                      <Button className="w-full" onClick={() => setDialogIsOpen(false)}>
+                      <Button
+                        className="w-full"
+                        onClick={() => setDialogIsOpen(false)}
+                      >
                         Fechar modal
                       </Button>
                     </DialogContent>
                   </Dialog>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium">
+                    Dias de Funcionamento
+                  </label>
+                  <div className="rounded-lg border bg-card p-4">
+                    <DaysSelector
+                    // mostrar os dias vindo do banco
+                      selectedDays={selectedDays}
+                      onChange={handleDaysChange}
+                    />
+                  </div>
                 </div>
 
                 {/* Fuso horário */}
@@ -304,9 +363,14 @@ export function ProfileContent({ user }: ProfileContentProps) {
                   name="timeZone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-semibold">Selecione o fuso horário</FormLabel>
+                      <FormLabel className="font-semibold">
+                        Selecione o fuso horário
+                      </FormLabel>
                       <FormControl>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o seu fuso horário" />
                           </SelectTrigger>
@@ -323,7 +387,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
                   )}
                 />
 
-                <Button type="submit" className="w-full bg-emerald-500 hover:bg-emerald-400 cursor-pointer" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  className="w-full bg-emerald-500 hover:bg-emerald-400 cursor-pointer"
+                  disabled={isLoading}
+                >
                   {isLoading ? (
                     <span className="w-44 flex items-center justify-center">
                       <Loader className="animate-spin" />
@@ -340,7 +408,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
 
       {/* Logout */}
       <section className="mt-4">
-        <Button className="bg-red-500 hover:bg-red-300 cursor-pointer" onClick={handleLogout} disabled={isLogoutLoading}>
+        <Button
+          className="bg-red-500 hover:bg-red-300 cursor-pointer"
+          onClick={handleLogout}
+          disabled={isLogoutLoading}
+        >
           {isLogoutLoading ? (
             <span className="w-24 flex items-center justify-center">
               <Loader className="animate-spin" />

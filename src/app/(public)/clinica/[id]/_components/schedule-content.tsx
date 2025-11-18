@@ -150,7 +150,10 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
       <div>
         <a
           target="_blank"
-          href={`https://wa.me/+55${clinic.phone?.replace(/\D/g, "")}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}
+          href={`https://wa.me/+55${clinic.phone?.replace(
+            /\D/g,
+            ""
+          )}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}
         >
           Agendamento confirmado!
         </a>
@@ -159,6 +162,11 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
         duration: 5000,
         closeButton: true,
         position: "top-right",
+        style: {
+          borderRadius: "10px",
+          background: "#0cde7c",
+          color: "#fff",
+        },
       }
     );
 
@@ -166,6 +174,21 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
     setSelectedTime("");
     setIsLoading(false);
   }
+
+  // dias bloqueados
+  const dayMap: Record<string, number> = {
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
+  };
+
+  const allowedDays = clinic.workingDays.map(
+    (day) => dayMap[day.toLowerCase()]
+  );
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -266,6 +289,7 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
                     <DateTimePicker
                       initialDate={new Date()}
                       className="w-full rounded border p-2"
+                      allowedDays={allowedDays}
                       onChange={(date) => {
                         if (date) {
                           field.onChange(date);
@@ -476,7 +500,10 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
                 <a
                   className="text-green-400 hover:text-green-200 px-2"
                   target="_blank"
-                  href={`https://wa.me/+55${clinic.phone?.replace(/\D/g, "")}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}
+                  href={`https://wa.me/+55${clinic.phone?.replace(
+                    /\D/g,
+                    ""
+                  )}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}
                 >
                   Confirme seu agendamento aqui
                 </a>
