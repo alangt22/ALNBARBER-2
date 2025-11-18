@@ -8,8 +8,12 @@ interface SchedulePageProps {
 }
 
 // Função dinâmica para gerar metadata
-export async function generateMetadata({ params }: SchedulePageProps): Promise<Metadata> {
-  const userId = params.id;
+export async function generateMetadata({
+    params,
+} : {
+    params: Promise<{ id: string}>
+}) {
+  const userId = (await params).id;
   const user = await getInfoSchedule({ userId });
 
   if (!user) {
@@ -46,8 +50,12 @@ export async function generateMetadata({ params }: SchedulePageProps): Promise<M
   };
 }
 
-export default async function SchedulePage({ params }: SchedulePageProps) {
-  const userId = params.id;
+export default async function SchedulePage({
+    params,
+} : {
+    params: Promise<{ id: string}>
+}) {
+  const userId = ( await params).id;
   const user = await getInfoSchedule({ userId });
 
   if (!user) {
