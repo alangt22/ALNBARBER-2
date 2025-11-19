@@ -113,17 +113,17 @@ export function About() {
         </div>
         {isLoginModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-            <div className="bg-white p-6 rounded-md text-center">
-              <h1 className="text-2xl font-bold mb-2">
-                Odonto<span className="text-[#42ff7c]">PRO</span>
-              </h1>
+              <div className="bg-zinc-900 p-6 rounded-md text-center">
+                <h1 className="text-2xl font-bold mb-2 text-blue-500">
+                  ALN<span className="text-white">Barber</span>
+                </h1>
               <h3 className="text-lg font-semibold">
                 Faça login ou Crie sua conta com Google
               </h3>
               <div className="mt-4">
                 <Button
                   onClick={() => handleLogin("google")}
-                  className="w-full mb-4"
+                  className="w-full mb-4 cursor-pointer"
                 >
                   Login com Google
                   <FcGoogle className="mr-2 w-5 h-5" />
@@ -132,7 +132,7 @@ export function About() {
               <Button
                 onClick={() => setIsLoginModalOpen(false)}
                 variant="outline"
-                className="w-full mt-4"
+                className="w-full mt-4 cursor-pointer"
               >
                 Cancelar
               </Button>

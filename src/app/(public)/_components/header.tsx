@@ -74,7 +74,7 @@ export function Header() {
       ) : ( 
         <Button onClick={handleChange} className="text-white cursor-pointer">
           <LogIn color="#fff"/>
-          Portal da clinica
+          Portal da Barbearia
         </Button>
       )}
     </>
@@ -118,7 +118,7 @@ export function Header() {
         </Sheet>
       </div>
 
-      {isLoginModalOpen && (
+      {isLoginModalOpen && ( 
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-zinc-900 p-8 gap-6 rounded-md text-center">
             <h1 className="text-2xl font-bold mb-2 text-blue-500">

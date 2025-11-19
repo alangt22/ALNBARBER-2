@@ -61,7 +61,7 @@ export function Professionals({professionals}: ProfessionalProps) {
                                     </div>
     
                                     <Link
-                                        href={`/clinica/${clinic.id}`}
+                                        href={`/barbearia/${clinic.id}`}
                                         target="_blank"
                                         className="w-full bg-blue-500 hover:bg-blue-900 text-white flex items-center justify-center py-2 rounded-md text-sm md:text-base font-medium"
                                     >
